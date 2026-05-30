@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文化资讯 · 陕西皮影戏</title>
+  <style>
+    :root {
+      --color-cream: #F5E6D3; --color-cream-light: #FAF3E8; --color-cream-dark: #E8D5B7;
+      --color-brown: #4A2C17; --color-brown-light: #6B4423; --color-brown-dark: #3D2314;
+      --color-gold: #C9A227; --nav-height: 64px; --transition: 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Noto Serif SC", "SimSun", serif; background: var(--color-cream-light); color: var(--color-brown); line-height: 1.8; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .navbar { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(61,35,20,0.95); z-index: 1000; }
+    .navbar-inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; color: var(--color-cream); font-size: 1.25rem; font-weight: bold; }
+    .logo-icon { width: 36px; height: 36px; background: var(--color-gold); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--color-brown-dark); }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a { color: var(--color-cream); padding: 8px 14px; border-radius: 4px; font-size: 0.9rem; transition: background var(--transition); }
+    .nav-links a:hover, .nav-links a.active { background: var(--color-gold); color: var(--color-brown-dark); }
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-cream); }
+    .hero-section { padding: calc(var(--nav-height) + 24px) 24px 36px; background: var(--color-cream-light); }
+    .page-banner { width: min(calc(960px + var(--carousel-frame-extra, 1.5cm)), calc(100% - 48px)); height: calc(280px + var(--carousel-frame-extra, 1.5cm)); margin: 0 auto; border-radius: 10px; border: 2px solid var(--color-gold); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--color-cream); background: linear-gradient(rgba(61,35,20,0.5), rgba(61,35,20,0.55)), url('img/banner-news.png') center/cover no-repeat; }
+    .page-banner h1 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); letter-spacing: 6px; }
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 64px 24px; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 1.8rem; color: var(--color-brown-dark); letter-spacing: 6px; display: inline-block; padding-bottom: 12px; border-bottom: 3px solid var(--color-gold); }
+    .news-flex { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 64px; }
+    .news-card { flex: 1 1 300px; background: var(--color-cream); border: 1px solid var(--color-cream-dark); border-radius: 8px; padding: 24px; box-shadow: 0 4px 16px rgba(74,44,23,0.08); }
+    .news-card time { font-size: 0.85rem; color: var(--color-gold); }
+    .news-card h3 { margin: 10px 0; color: var(--color-brown-dark); font-size: 1.15rem; }
+    .news-card p { font-size: 0.92rem; color: var(--color-brown-light); }
+    .table-wrapper { overflow-x: auto; }
+    .schedule-table { width: 100%; border-collapse: collapse; background: var(--color-cream); box-shadow: 0 4px 16px rgba(74,44,23,0.08); }
+    .schedule-table th, .schedule-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--color-cream-dark); font-size: 0.9rem; }
+    .schedule-table th { background: var(--color-brown-dark); color: var(--color-cream); }
+    .schedule-table tr:hover td { background: rgba(201,162,39,0.08); }
+    .footer { background: var(--color-brown-dark); color: var(--color-cream); padding: 32px; text-align: center; font-size: 0.85rem; opacity: 0.8; margin-top: 40px; }
+  </style>
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+  <div class="search-toast" id="searchToast"><h4>搜索结果</h4><p id="searchToastText"></p></div>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo"><div class="logo-icon">影</div><span>陕西皮影戏</span></a>
+      <div class="nav-right">
+        <form class="nav-search" id="navSearchForm" role="search">
+          <input type="search" id="searchInput" placeholder="搜索非遗..." aria-label="搜索">
+          <button type="submit">搜索</button>
+        </form>
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单"><span></span><span></span><span></span></button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">首页</a></li>
+          <li class="nav-dropdown">
+            <a href="overview.html">非遗概述</a>
+            <ul class="dropdown-menu">
+              <li><a href="overview.html#folk">民间文学</a></li>
+              <li><a href="overview.html#music">传统音乐</a></li>
+              <li><a href="overview.html#drama">传统戏剧</a></li>
+              <li><a href="projects.html">皮影技艺</a></li>
+            </ul>
+          </li>
+          <li><a href="inheritros.html">非遗传承</a></li>
+          <li><a href="activity.html">非遗体验</a></li>
+          <li><a href="mall.html">非遗商城</a></li>
+          <li><a href="news.html" class="active">文化资讯</a></li>
+          <li><a href="contact.html">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <header class="page-banner"><div><h1>文化资讯</h1><p>非遗动态 · 活动公告 · 传承故事</p></div></header>
+  </section>
+
+  <main class="main-content">
+    <div class="section-title"><h2>最新资讯</h2><p>关注陕西皮影戏前沿动态</p></div>
+    <div class="news-flex">
+      <article class="news-card">
+        <time datetime="2026-05-20">2026-05-20</time>
+        <h3>皮影戏进校园活动启动</h3>
+        <p>关中地区 20 所中小学将开展皮影文化体验课程，传承人走进课堂讲授光影艺术。</p>
+      </article>
+      <article class="news-card">
+        <time datetime="2026-05-08">2026-05-08</time>
+        <h3>非遗数字化保护工程进展</h3>
+        <p>首批 500 件精品影人完成三维扫描存档，为研究与传承提供数字资源。</p>
+      </article>
+      <article class="news-card">
+        <time datetime="2026-04-25">2026-04-25</time>
+        <h3>《卖货郎》专场演出圆满落幕</h3>
+        <p>经典剧目在非遗文化馆连演三场，吸引千余观众感受传统皮影魅力。</p>
+      </article>
+    </div>
+
+    <div class="section-title"><h2>近期活动安排表</h2><p>欢迎预约参与</p></div>
+    <div class="table-wrapper">
+      <table class="schedule-table">
+        <thead>
+          <tr><th>日期</th><th>活动名称</th><th>地点</th><th>时间</th><th>报名方式</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2026-06-07</td><td>皮影雕刻体验课</td><td>非遗文化馆</td><td>14:00-16:00</td><td><a href="activity.html">在线报名</a></td></tr>
+          <tr><td>2026-06-08</td><td>皮影戏观摩演出</td><td>非遗文化馆</td><td>10:00-11:30</td><td><a href="activity.html">在线报名</a></td></tr>
+          <tr><td>2026-06-14</td><td>亲子皮影 DIY</td><td>非遗文化馆</td><td>14:00-16:00</td><td><a href="activity.html">在线报名</a></td></tr>
+          <tr><td>2026-06-21</td><td>非遗研学半日营</td><td>华州区传习所</td><td>09:00-12:00</td><td><a href="activity.html">在线报名</a></td></tr>
+          <tr><td>2026-06-28</td><td>传承人讲座沙龙</td><td>线上直播</td><td>19:30-21:00</td><td>公众号预约</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="footer"><p>&copy; 2026 陕西皮影戏非遗文化网站</p></footer>
+  <script src="js/nav.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

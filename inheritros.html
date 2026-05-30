@@ -1,0 +1,848 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非遗传承人 · 陕西皮影戏</title>
+  <style>
+    /* ==================== 全局样式与变量（与首页统一） ==================== */
+    :root {
+      --color-cream: #F5E6D3;
+      --color-cream-light: #FAF3E8;
+      --color-cream-dark: #E8D5B7;
+      --color-brown: #4A2C17;
+      --color-brown-light: #6B4423;
+      --color-brown-dark: #3D2314;
+      --color-gold: #C9A227;
+      --nav-height: 64px;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Serif SC", "SimSun", "宋体", serif;
+      background-color: var(--color-cream-light);
+      color: var(--color-brown);
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ==================== 1. 顶部固定响应式导航栏（复用首页） ==================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background: rgba(61, 35, 20, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(61, 35, 20, 0.3);
+    }
+
+    .navbar-inner {
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--color-cream);
+      font-size: 1.25rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--color-gold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--color-brown-dark);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      color: var(--color-cream);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: var(--color-gold);
+      color: var(--color-brown-dark);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      background: none;
+      border: none;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-cream);
+      transition: var(--transition);
+    }
+
+    /* ==================== 页面横幅（与首页轮播同尺寸） ==================== */
+    .hero-section {
+      padding: calc(var(--nav-height) + 24px) 24px 36px;
+      background: var(--color-cream-light);
+    }
+
+    .page-banner {
+      width: min(calc(960px + var(--carousel-frame-extra)), calc(78% + var(--carousel-frame-extra)));
+      height: calc(280px + var(--carousel-frame-extra));
+      margin: 0 auto;
+      border-radius: 10px;
+      border: 2px solid var(--color-gold);
+      box-shadow: 0 8px 28px rgba(74, 44, 23, 0.14);
+      background: linear-gradient(rgba(61, 35, 20, 0.5), rgba(61, 35, 20, 0.55)),
+                  url('img/puppet-performance.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--color-cream);
+    }
+
+    .page-banner h1 {
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      letter-spacing: 6px;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .page-banner p {
+      font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+      letter-spacing: 3px;
+      opacity: 0.95;
+    }
+
+    /* ==================== 主内容区通用样式 ==================== */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 6px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 12px;
+    }
+
+    .section-title h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--color-gold);
+    }
+
+    .section-title p {
+      margin-top: 12px;
+      color: var(--color-brown-light);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+    }
+
+    /* ==================== 2. 传承人风采轮播图（与首页同尺寸） ==================== */
+    .showcase-carousel {
+      position: relative;
+      width: min(calc(960px + var(--carousel-frame-extra)), calc(78% + var(--carousel-frame-extra)));
+      height: calc(280px + var(--carousel-frame-extra));
+      margin: 0 auto 80px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(74, 44, 23, 0.14);
+      background: var(--color-brown-dark);
+      border: 2px solid var(--color-gold);
+    }
+
+    .showcase-slides {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* 单张轮播幻灯片：铺满轮播区域 */
+    .showcase-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .showcase-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    /* 遮罩与文字 */
+    .showcase-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(61, 35, 20, 0.75), rgba(61, 35, 20, 0.2));
+    }
+
+    .showcase-caption {
+      position: absolute;
+      bottom: 32px;
+      left: 40px;
+      z-index: 2;
+      color: var(--color-cream);
+      max-width: 500px;
+    }
+
+    .showcase-caption h3 {
+      font-size: 1.35rem;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      color: var(--color-gold);
+    }
+
+    .showcase-caption p {
+      font-size: 0.95rem;
+      opacity: 0.92;
+      letter-spacing: 1px;
+    }
+
+    /* 轮播指示器 */
+    .showcase-dots {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .showcase-dots button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--color-cream);
+      background: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .showcase-dots button.active {
+      background: var(--color-gold);
+      border-color: var(--color-gold);
+    }
+
+    /* 轮播箭头 */
+    .showcase-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(245, 230, 211, 0.25);
+      border: 1px solid var(--color-cream);
+      color: var(--color-cream);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .showcase-arrow:hover {
+      background: var(--color-gold);
+      color: var(--color-brown-dark);
+      border-color: var(--color-gold);
+    }
+
+    .showcase-arrow.prev { left: 14px; }
+    .showcase-arrow.next { right: 14px; }
+
+    /* ==================== 3. Flex 布局 - 传承人卡片 ==================== */
+    .inheritor-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+
+    /* 单个传承人卡片 */
+    .inheritor-card {
+      flex: 1 1 300px;
+      max-width: calc((100% - 56px) / 3);
+      min-width: 280px;
+      background: var(--color-cream);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(74, 44, 23, 0.1);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .inheritor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 28px rgba(74, 44, 23, 0.16);
+    }
+
+    /* 传承人照片 */
+    .inheritor-photo {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      object-position: center;
+      background: var(--color-brown-dark);
+    }
+
+    .inheritor-body {
+      padding: 24px;
+    }
+
+    .inheritor-body h3 {
+      font-size: 1.3rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+    }
+
+    /* 传承人头衔标签 */
+    .inheritor-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: var(--color-cream);
+      background: var(--color-brown-light);
+      padding: 2px 10px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .inheritor-body .intro {
+      font-size: 0.92rem;
+      color: var(--color-brown-light);
+      text-align: justify;
+      margin-bottom: 14px;
+    }
+
+    /* 代表作品 */
+    .inheritor-works {
+      border-top: 1px dashed var(--color-cream-dark);
+      padding-top: 12px;
+    }
+
+    .inheritor-works h4 {
+      font-size: 0.9rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .inheritor-works p {
+      font-size: 0.88rem;
+      color: var(--color-brown-light);
+    }
+
+    /* ==================== 4. 无序列表 - 主要成就 ==================== */
+    .achievements-section {
+      background: var(--color-cream);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 8px;
+      padding: 40px 48px;
+      box-shadow: 0 4px 20px rgba(74, 44, 23, 0.08);
+    }
+
+    /* 无序列表恢复圆点样式 */
+    .achievements-list {
+      list-style: disc;
+      padding-left: 28px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .achievements-list li {
+      margin-bottom: 18px;
+      color: var(--color-brown-light);
+      font-size: 0.95rem;
+      padding-left: 4px;
+    }
+
+    .achievements-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .achievements-list li strong {
+      color: var(--color-brown-dark);
+      letter-spacing: 1px;
+    }
+
+    /* ==================== 5. 页脚（复用首页） ==================== */
+    .footer {
+      background: var(--color-brown-dark);
+      color: var(--color-cream);
+      padding: 48px 24px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(245, 230, 211, 0.2);
+    }
+
+    .footer-brand h3 {
+      font-size: 1.3rem;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      color: var(--color-gold);
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      max-width: 300px;
+    }
+
+    .footer-contact h4 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: var(--color-gold);
+      letter-spacing: 2px;
+    }
+
+    .footer-contact ul li {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .footer-contact ul li span {
+      color: var(--color-gold);
+      margin-right: 8px;
+    }
+
+    .footer-copyright {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 24px;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      letter-spacing: 1px;
+    }
+
+  </style>
+  <!-- 全局响应式适配（手机 / 平板 / 电脑） -->
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+  <div class="search-toast" id="searchToast"><h4>搜索结果</h4><p id="searchToastText"></p></div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">影</div>
+        <span>陕西皮影戏</span>
+      </a>
+      <div class="nav-right">
+        <form class="nav-search" id="navSearchForm" role="search">
+          <input type="search" id="searchInput" placeholder="搜索非遗..." aria-label="搜索">
+          <button type="submit">搜索</button>
+        </form>
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">首页</a></li>
+          <li class="nav-dropdown">
+            <a href="overview.html">非遗概述</a>
+            <ul class="dropdown-menu">
+              <li><a href="overview.html#folk">民间文学</a></li>
+              <li><a href="overview.html#music">传统音乐</a></li>
+              <li><a href="overview.html#drama">传统戏剧</a></li>
+              <li><a href="projects.html">皮影技艺</a></li>
+            </ul>
+          </li>
+          <li><a href="inheritros.html" class="active">非遗传承</a></li>
+          <li><a href="activity.html">非遗体验</a></li>
+          <li><a href="mall.html">非遗商城</a></li>
+          <li><a href="news.html">文化资讯</a></li>
+          <li><a href="contact.html">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面顶部横幅 -->
+  <section class="hero-section">
+    <header class="page-banner">
+      <div>
+        <h1>非遗传承人</h1>
+        <p>致敬幕后匠人 · 守护光影技艺</p>
+      </div>
+    </header>
+  </section>
+
+  <main class="main-content">
+
+    <!-- ==================== 2. 传承人风采轮播图 ==================== -->
+    <section>
+      <div class="section-title">
+        <h2>传承人风采</h2>
+        <p>走近陕西皮影戏杰出代表性传承人</p>
+      </div>
+
+      <div class="showcase-carousel" id="showcaseCarousel">
+        <div class="showcase-slides">
+          <!-- 轮播 1：汪天稳 · 雕刻大师（700×467 横向） -->
+          <div class="showcase-slide active"
+               style="background-image: url('img/puppet-carving.png');">
+            <div class="showcase-caption">
+              <h3>汪天稳 · 雕刻大师</h3>
+              <p>国家级非遗传承人，六十余年潜心钻研皮影雕刻，作品被中国美术馆等机构收藏。</p>
+            </div>
+          </div>
+          <!-- 轮播 2：薛宏权 · 技艺革新 -->
+          <div class="showcase-slide"
+               style="background-image: url('img/puppet-artisan.png');">
+            <div class="showcase-caption">
+              <h3>薛宏权 · 技艺革新者</h3>
+              <p>将传统皮影与现代设计相结合，推动皮影艺术走进文创市场与青少年课堂。</p>
+            </div>
+          </div>
+          <!-- 轮播 3：幕后光影 · 匠心传承（348×234 横向） -->
+          <div class="showcase-slide"
+               style="background-image: url('img/puppet-bowl.png');">
+            <div class="showcase-caption">
+              <h3>幕后光影 · 匠心传承</h3>
+              <p>一代代艺人坚守幕布之后，以刀为笔、以皮为纸，让千年非遗薪火相传。</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="showcase-arrow prev" id="showPrev" aria-label="上一张">‹</button>
+        <button class="showcase-arrow next" id="showNext" aria-label="下一张">›</button>
+
+        <div class="showcase-dots" id="showDots">
+          <button class="active" aria-label="第1张"></button>
+          <button aria-label="第2张"></button>
+          <button aria-label="第3张"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. Flex 布局 - 传承人卡片 ==================== -->
+    <section>
+      <div class="section-title">
+        <h2>代表人物</h2>
+        <p>陕西皮影戏国家级、省级代表性传承人</p>
+      </div>
+
+      <div class="inheritor-flex">
+        <!-- 传承人 1：汪天稳（与代表作品合影） -->
+        <article class="inheritor-card">
+          <img class="inheritor-photo"
+               src="img/puppet-portrait.png"
+               alt="汪天稳代表作品">
+          <div class="inheritor-body">
+            <h3>汪天稳</h3>
+            <span class="inheritor-tag">国家级传承人</span>
+            <p class="intro">
+              华县皮影雕刻代表人物，自幼随父学艺，精通选皮、雕刻、
+              着色全套工序。其作品造型生动、刀工细腻，被誉为"中国皮影雕刻第一人"。
+            </p>
+            <div class="inheritor-works">
+              <h4>代表作品</h4>
+              <p>《白蛇传》影人全套、《西游记》人物群像、大型皮影《百猫图》</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 传承人 2：吕崇德（幕后操演场景） -->
+        <article class="inheritor-card">
+          <img class="inheritor-photo"
+               src="img/puppet-performance.png"
+               alt="吕崇德演出场景">
+          <div class="inheritor-body">
+            <h3>吕崇德</h3>
+            <span class="inheritor-tag">国家级传承人</span>
+            <p class="intro">
+              华县皮影戏"十老"之一，擅长演唱与操纵表演。
+              嗓音洪亮、表演细腻，从艺七十余载，培养了大批青年皮影艺人。
+            </p>
+            <div class="inheritor-works">
+              <h4>代表作品</h4>
+              <p>《封神演义》全本演唱、《杨家将》系列、传统折子戏《打金枝》</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 传承人 3：薛宏权（皮影雕刻创作） -->
+        <article class="inheritor-card">
+          <img class="inheritor-photo"
+               src="img/puppet-artisan.png"
+               alt="薛宏权雕刻技艺">
+          <div class="inheritor-body">
+            <h3>薛宏权</h3>
+            <span class="inheritor-tag">省级传承人</span>
+            <p class="intro">
+              青年皮影雕刻家，汪天稳弟子。在继承传统技艺基础上融入现代审美，
+              创办皮影工坊，致力于非遗产业化与研学教育推广。
+            </p>
+            <div class="inheritor-works">
+              <h4>代表作品</h4>
+              <p>文创皮影《十二生肖》、《长安十二时辰》主题影人、皮影装饰画系列</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 传承人 4：段俊发（阿宫腔皮影献艺） -->
+        <article class="inheritor-card">
+          <img class="inheritor-photo"
+               src="img/puppet-figure.png"
+               alt="段俊发代表剧目影人">
+          <div class="inheritor-body">
+            <h3>段俊发</h3>
+            <span class="inheritor-tag">省级传承人</span>
+            <p class="intro">
+              阿宫腔皮影戏代表性传承人，集演唱、操纵、雕刻于一身。
+              长期活跃于关中乡村舞台，为阿宫腔皮影戏的抢救保护作出重要贡献。
+            </p>
+            <div class="inheritor-works">
+              <h4>代表作品</h4>
+              <p>《鸿门宴》全本、《周仁回府》、阿宫腔传统剧目《白玉梅》</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 传承人 5：王文坤（演唱与操纵） -->
+        <article class="inheritor-card">
+          <img class="inheritor-photo"
+               src="img/puppet-bowl.png"
+               alt="王文坤演出场景">
+          <div class="inheritor-body">
+            <h3>王文坤</h3>
+            <span class="inheritor-tag">国家级传承人</span>
+            <p class="intro">
+              华县皮影戏表演艺术家，自幼随父学艺，技艺全面。
+              擅长旦角演唱与影人操纵，嗓音甜美、表演灵动，多次赴海内外展演交流。
+            </p>
+            <div class="inheritor-works">
+              <h4>代表作品</h4>
+              <p>《火焰驹》全本、《狸猫换太子》、传统折子戏《打神》</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 传承人 6：齐永全（皮影雕刻） -->
+        <article class="inheritor-card">
+          <img class="inheritor-photo"
+               src="img/puppet-carving.png"
+               alt="齐永全雕刻作品">
+          <div class="inheritor-body">
+            <h3>齐永全</h3>
+            <span class="inheritor-tag">国家级传承人</span>
+            <p class="intro">
+              华县皮影雕刻大师，刀法遒劲、线条流畅，在人物造型与
+              花草纹样雕刻上造诣极深，作品多次入选国家级非遗展览并被机构收藏。
+            </p>
+            <div class="inheritor-works">
+              <h4>代表作品</h4>
+              <p>《百猫图》系列、《八仙过海》影人、大型皮影《清明上河图》</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== 4. 无序列表 - 传承人主要成就 ==================== -->
+    <section>
+      <div class="section-title">
+        <h2>主要成就</h2>
+        <p>陕西皮影戏传承人近年来的代表性成果</p>
+      </div>
+
+      <div class="achievements-section">
+        <ul class="achievements-list">
+          <li>
+            <strong>2006年</strong> — 华县皮影戏列入首批国家级非物质文化遗产名录，
+            汪天稳、吕崇德等艺人被评为国家级代表性传承人。
+          </li>
+          <li>
+            <strong>2011年</strong> — 中国皮影艺术博物馆在华县建成开馆，
+            收藏皮影文物万余件，成为皮影文化研究的重要基地。
+          </li>
+          <li>
+            <strong>2015年</strong> — 陕西皮影戏走进联合国教科文组织非遗展演活动，
+            在国际舞台展示中国光影艺术的独特魅力。
+          </li>
+          <li>
+            <strong>2018年</strong> — "皮影进校园"项目在关中多地推广，
+            传承人走进中小学开设体验课程，覆盖师生逾万人次。
+          </li>
+          <li>
+            <strong>2021年</strong> — 薛宏权皮影工坊获评省级非遗扶贫就业工坊，
+            带动当地百余名群众学习皮影制作技艺。
+          </li>
+          <li>
+            <strong>2024年</strong> — 陕西皮影数字化保护工程完成首批 500 件精品影人
+            三维扫描存档，为非遗永续传承奠定数字基础。
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 5. 页脚（复用首页） ==================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>陕西皮影戏</h3>
+        <p>传承千年光影艺术，弘扬中华优秀传统文化，让非遗文化焕发时代光彩。</p>
+      </div>
+
+      <div class="footer-contact">
+        <h4>联系我们</h4>
+        <ul>
+          <li><span>地址：</span>陕西省西安市雁塔区文化路88号</li>
+          <li><span>电话：</span>029-8888-6666</li>
+          <li><span>邮箱：</span>shadow@shaanxi-piying.cn</li>
+          <li><span>开放时间：</span>周二至周日 9:00 - 17:30</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      <p>&copy; 2026 陕西皮影戏非遗文化网站 · 保留所有权利</p>
+    </div>
+  </footer>
+
+  <!-- 全局导航栏交互 -->
+  <script src="js/nav.js"></script>
+  <script src="js/search.js"></script>
+
+  <!-- ==================== JavaScript：轮播图 ==================== -->
+  <script>
+    /* ---------- 传承人风采轮播图 ---------- */
+    const showSlides = document.querySelectorAll('.showcase-slide');
+    const showDots = document.querySelectorAll('.showcase-dots button');
+    const showPrev = document.getElementById('showPrev');
+    const showNext = document.getElementById('showNext');
+    let showIndex = 0;
+    let showTimer;
+
+    function goShow(index) {
+      showSlides[showIndex].classList.remove('active');
+      showDots[showIndex].classList.remove('active');
+      showIndex = (index + showSlides.length) % showSlides.length;
+      showSlides[showIndex].classList.add('active');
+      showDots[showIndex].classList.add('active');
+    }
+
+    function startShowAuto() {
+      showTimer = setInterval(function () {
+        goShow(showIndex + 1);
+      }, 5000);
+    }
+
+    function resetShowAuto() {
+      clearInterval(showTimer);
+      startShowAuto();
+    }
+
+    showPrev.addEventListener('click', function () {
+      goShow(showIndex - 1);
+      resetShowAuto();
+    });
+
+    showNext.addEventListener('click', function () {
+      goShow(showIndex + 1);
+      resetShowAuto();
+    });
+
+    showDots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () {
+        goShow(i);
+        resetShowAuto();
+      });
+    });
+
+    startShowAuto();
+  </script>
+</body>
+</html>

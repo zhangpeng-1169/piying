@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非遗商城 · 陕西皮影戏</title>
+  <style>
+    :root {
+      --color-cream: #F5E6D3; --color-cream-light: #FAF3E8; --color-cream-dark: #E8D5B7;
+      --color-brown: #4A2C17; --color-brown-light: #6B4423; --color-brown-dark: #3D2314;
+      --color-gold: #C9A227; --nav-height: 64px; --transition: 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Noto Serif SC", "SimSun", serif; background: var(--color-cream-light); color: var(--color-brown); line-height: 1.8; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .navbar { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(61,35,20,0.95); z-index: 1000; }
+    .navbar-inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; color: var(--color-cream); font-size: 1.25rem; font-weight: bold; }
+    .logo-icon { width: 36px; height: 36px; background: var(--color-gold); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--color-brown-dark); }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a { color: var(--color-cream); padding: 8px 14px; border-radius: 4px; font-size: 0.9rem; transition: background var(--transition); }
+    .nav-links a:hover, .nav-links a.active { background: var(--color-gold); color: var(--color-brown-dark); }
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-cream); }
+    .hero-section { padding: calc(var(--nav-height) + 24px) 24px 36px; background: var(--color-cream-light); }
+    .page-banner { width: min(calc(960px + var(--carousel-frame-extra, 1.5cm)), calc(100% - 48px)); height: calc(280px + var(--carousel-frame-extra, 1.5cm)); margin: 0 auto; border-radius: 10px; border: 2px solid var(--color-gold); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--color-cream); background: linear-gradient(rgba(61,35,20,0.5), rgba(61,35,20,0.55)), url('img/banner-mall.png') center/cover no-repeat; }
+    .page-banner h1 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); letter-spacing: 6px; }
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 64px 24px; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 1.8rem; color: var(--color-brown-dark); letter-spacing: 6px; display: inline-block; padding-bottom: 12px; border-bottom: 3px solid var(--color-gold); }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; margin-bottom: 64px; }
+    .product-card { background: var(--color-cream); border: 1px solid var(--color-cream-dark); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 16px rgba(74,44,23,0.1); }
+    .product-card img { width: 100%; height: 180px; object-fit: cover; }
+    .product-body { padding: 20px; }
+    .product-body h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--color-brown-dark); }
+    .product-body .price { color: var(--color-gold); font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
+    .product-body p { font-size: 0.88rem; color: var(--color-brown-light); }
+    .table-wrapper { overflow-x: auto; margin-bottom: 48px; }
+    .price-table { width: 100%; border-collapse: collapse; background: var(--color-cream); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 16px rgba(74,44,23,0.08); }
+    .price-table th, .price-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--color-cream-dark); font-size: 0.92rem; }
+    .price-table th { background: var(--color-brown-dark); color: var(--color-cream); letter-spacing: 2px; }
+    .price-table tr:hover td { background: rgba(201,162,39,0.08); }
+    .footer { background: var(--color-brown-dark); color: var(--color-cream); padding: 32px 24px; margin-top: 40px; text-align: center; font-size: 0.85rem; opacity: 0.8; }
+  </style>
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+  <div class="search-toast" id="searchToast"><h4>搜索结果</h4><p id="searchToastText"></p></div>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo"><div class="logo-icon">影</div><span>陕西皮影戏</span></a>
+      <div class="nav-right">
+        <form class="nav-search" id="navSearchForm" role="search">
+          <input type="search" id="searchInput" placeholder="搜索非遗..." aria-label="搜索">
+          <button type="submit">搜索</button>
+        </form>
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单"><span></span><span></span><span></span></button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">首页</a></li>
+          <li class="nav-dropdown">
+            <a href="overview.html">非遗概述</a>
+            <ul class="dropdown-menu">
+              <li><a href="overview.html#folk">民间文学</a></li>
+              <li><a href="overview.html#music">传统音乐</a></li>
+              <li><a href="overview.html#drama">传统戏剧</a></li>
+              <li><a href="projects.html">皮影技艺</a></li>
+            </ul>
+          </li>
+          <li><a href="inheritros.html">非遗传承</a></li>
+          <li><a href="activity.html">非遗体验</a></li>
+          <li><a href="mall.html" class="active">非遗商城</a></li>
+          <li><a href="news.html">文化资讯</a></li>
+          <li><a href="contact.html">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <header class="page-banner"><div><h1>非遗商城</h1><p>精选皮影文创 · 把非遗带回家</p></div></header>
+  </section>
+
+  <main class="main-content">
+    <div class="section-title"><h2>文创精品</h2><p>传承技艺，创意生活</p></div>
+    <div class="product-grid">
+      <article class="product-card">
+        <img src="img/puppet-figure.png" alt="皮影人物摆件">
+        <div class="product-body"><h3>武将皮影摆件</h3><p class="price">¥ 128</p><p>手工雕刻，附精美礼盒</p></div>
+      </article>
+      <article class="product-card">
+        <img src="img/puppet-carving.png" alt="雕刻工具套装">
+        <div class="product-body"><h3>入门雕刻工具套装</h3><p class="price">¥ 198</p><p>体验课同款，含刻刀与牛皮</p></div>
+      </article>
+      <article class="product-card">
+        <img src="img/puppet-artisan.png" alt="皮影书签">
+        <div class="product-body"><h3>皮影系列书签</h3><p class="price">¥ 38</p><p>四款人物，镂空工艺</p></div>
+      </article>
+      <article class="product-card">
+        <img src="img/puppet-bowl.png" alt="碗碗腔主题明信片">
+        <div class="product-body"><h3>碗碗腔明信片套装</h3><p class="price">¥ 25</p><p>12张/套，非遗文化插画</p></div>
+      </article>
+    </div>
+
+    <div class="section-title"><h2>商品价目表</h2><p>陕西皮影非遗文创产品价格一览</p></div>
+    <div class="table-wrapper">
+      <table class="price-table">
+        <thead>
+          <tr><th>商品名称</th><th>类别</th><th>规格</th><th>价格（元）</th><th>库存状态</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>武将皮影摆件</td><td>装饰摆件</td><td>高约25cm</td><td>128</td><td>有货</td></tr>
+          <tr><td>入门雕刻工具套装</td><td>体验材料</td><td>8件套</td><td>198</td><td>有货</td></tr>
+          <tr><td>皮影系列书签</td><td>文具文创</td><td>4枚/套</td><td>38</td><td>有货</td></tr>
+          <tr><td>碗碗腔明信片套装</td><td>纸品文创</td><td>12张/套</td><td>25</td><td>有货</td></tr>
+          <tr><td>亲子DIY皮影材料包</td><td>体验材料</td><td>2人份</td><td>88</td><td>预售</td></tr>
+          <tr><td>非遗纪念帆布袋</td><td>生活用品</td><td>38×42cm</td><td>45</td><td>有货</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="footer"><p>&copy; 2026 陕西皮影戏非遗文化网站 · 商城为课程演示，不支持真实交易</p></footer>
+  <script src="js/nav.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

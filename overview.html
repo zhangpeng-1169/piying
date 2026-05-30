@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非遗概述 · 陕西皮影戏</title>
+  <style>
+    :root {
+      --color-cream: #F5E6D3; --color-cream-light: #FAF3E8; --color-cream-dark: #E8D5B7;
+      --color-brown: #4A2C17; --color-brown-light: #6B4423; --color-brown-dark: #3D2314;
+      --color-gold: #C9A227; --nav-height: 64px; --transition: 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Noto Serif SC", "SimSun", serif; background: var(--color-cream-light); color: var(--color-brown); line-height: 1.8; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .navbar { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(61,35,20,0.95); z-index: 1000; box-shadow: 0 2px 12px rgba(61,35,20,0.3); }
+    .navbar-inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; color: var(--color-cream); font-size: 1.25rem; font-weight: bold; }
+    .logo-icon { width: 36px; height: 36px; background: var(--color-gold); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--color-brown-dark); }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a { color: var(--color-cream); padding: 8px 14px; border-radius: 4px; font-size: 0.9rem; transition: background var(--transition); }
+    .nav-links a:hover, .nav-links a.active { background: var(--color-gold); color: var(--color-brown-dark); }
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-cream); }
+    .hero-section { padding: calc(var(--nav-height) + 24px) 24px 36px; background: var(--color-cream-light); }
+    .page-banner { width: min(calc(960px + var(--carousel-frame-extra, 1.5cm)), calc(100% - 48px)); height: calc(280px + var(--carousel-frame-extra, 1.5cm)); margin: 0 auto; border-radius: 10px; border: 2px solid var(--color-gold); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--color-cream); background: linear-gradient(rgba(61,35,20,0.5), rgba(61,35,20,0.55)), url('img/banner-overview.jpg') center/cover no-repeat; }
+    .page-banner h1 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); letter-spacing: 6px; }
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 64px 24px; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 1.8rem; color: var(--color-brown-dark); letter-spacing: 6px; display: inline-block; padding-bottom: 12px; border-bottom: 3px solid var(--color-gold); }
+    .section-title p { margin-top: 12px; color: var(--color-brown-light); font-size: 0.95rem; }
+    /* Grid 布局：非遗分类卡片 */
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; margin-bottom: 64px; }
+    .category-card { background: var(--color-cream); border: 1px solid var(--color-cream-dark); border-radius: 8px; padding: 28px 24px; box-shadow: 0 4px 16px rgba(74,44,23,0.08); transition: transform var(--transition); }
+    .category-card:hover { transform: translateY(-4px); }
+    .category-card h3 { color: var(--color-brown-dark); margin-bottom: 12px; border-left: 4px solid var(--color-gold); padding-left: 12px; }
+    .category-card p { font-size: 0.92rem; color: var(--color-brown-light); margin-bottom: 16px; }
+    .category-card a { color: var(--color-gold); font-size: 0.9rem; }
+    .footer { background: var(--color-brown-dark); color: var(--color-cream); padding: 48px 24px 24px; margin-top: 40px; }
+    .footer-copyright { text-align: center; padding-top: 24px; font-size: 0.85rem; opacity: 0.7; }
+  </style>
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+  <div class="search-toast" id="searchToast"><h4>搜索结果</h4><p id="searchToastText"></p></div>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo"><div class="logo-icon">影</div><span>陕西皮影戏</span></a>
+      <div class="nav-right">
+        <form class="nav-search" id="navSearchForm" role="search">
+          <input type="search" id="searchInput" placeholder="搜索非遗..." aria-label="搜索">
+          <button type="submit">搜索</button>
+        </form>
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单"><span></span><span></span><span></span></button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">首页</a></li>
+          <li class="nav-dropdown">
+            <a href="overview.html" class="active">非遗概述</a>
+            <ul class="dropdown-menu">
+              <li><a href="overview.html#folk">民间文学</a></li>
+              <li><a href="overview.html#music">传统音乐</a></li>
+              <li><a href="overview.html#drama">传统戏剧</a></li>
+              <li><a href="projects.html">皮影技艺</a></li>
+            </ul>
+          </li>
+          <li><a href="inheritros.html">非遗传承</a></li>
+          <li><a href="activity.html">非遗体验</a></li>
+          <li><a href="mall.html">非遗商城</a></li>
+          <li><a href="news.html">文化资讯</a></li>
+          <li><a href="contact.html">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <header class="page-banner"><div><h1>非遗概述</h1><p>走进陕西非物质文化遗产的分类与内涵</p></div></header>
+  </section>
+
+  <main class="main-content">
+    <div class="section-title"><h2>非遗十大门类</h2><p>以陕西皮影戏为核心，纵览非遗文化体系</p></div>
+    <div class="category-grid">
+      <article class="category-card" id="folk">
+        <h3>民间文学</h3>
+        <p>包括神话传说、民间故事与说唱文学。皮影戏剧目多取材于《封神演义》《西游记》等民间叙事。</p>
+        <a href="projects.html">查看相关项目 →</a>
+      </article>
+      <article class="category-card" id="music">
+        <h3>传统音乐</h3>
+        <p>碗碗腔、弦板腔等地方唱腔与器乐伴奏，是陕西皮影戏的灵魂所在。</p>
+        <a href="projects.html">查看相关项目 →</a>
+      </article>
+      <article class="category-card" id="drama">
+        <h3>传统戏剧</h3>
+        <p>华县皮影戏、阿宫腔皮影戏等列入国家级非遗名录，被誉为"电影艺术的鼻祖"。</p>
+        <a href="projects.html">查看相关项目 →</a>
+      </article>
+      <article class="category-card">
+        <h3>传统技艺</h3>
+        <p>皮影雕刻涵盖选皮、制皮、画稿、镂刻、着色等工序，凝聚匠人毕生心血。</p>
+        <a href="inheritros.html">走近传承人 →</a>
+      </article>
+      <article class="category-card">
+        <h3>民俗</h3>
+        <p>搭台、祭影、开台、收台等演出习俗，承载着关中民间信仰与社群记忆。</p>
+        <a href="experience.html">了解体验流程 →</a>
+      </article>
+      <article class="category-card">
+        <h3>传统美术</h3>
+        <p>皮影人物造型夸张生动，线条繁而不乱，具有极高的装饰性与艺术审美价值。</p>
+        <a href="mall.html">浏览文创作品 →</a>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="footer-copyright"><p>&copy; 2026 陕西皮影戏非遗文化网站</p></div></footer>
+  <script src="js/nav.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

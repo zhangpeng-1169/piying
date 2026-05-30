@@ -1,0 +1,877 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系我们 · 陕西皮影戏</title>
+  <style>
+    /* ==================== 全局样式与变量（与首页统一） ==================== */
+    :root {
+      --color-cream: #F5E6D3;
+      --color-cream-light: #FAF3E8;
+      --color-cream-dark: #E8D5B7;
+      --color-brown: #4A2C17;
+      --color-brown-light: #6B4423;
+      --color-brown-dark: #3D2314;
+      --color-gold: #C9A227;
+      --color-error: #B33A3A;
+      --nav-height: 64px;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Serif SC", "SimSun", "宋体", serif;
+      background-color: var(--color-cream-light);
+      color: var(--color-brown);
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ==================== 1. 顶部固定响应式导航栏（复用首页） ==================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background: rgba(61, 35, 20, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(61, 35, 20, 0.3);
+    }
+
+    .navbar-inner {
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--color-cream);
+      font-size: 1.25rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--color-gold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--color-brown-dark);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      color: var(--color-cream);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: var(--color-gold);
+      color: var(--color-brown-dark);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      background: none;
+      border: none;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-cream);
+      transition: var(--transition);
+    }
+
+    /* ==================== 页面横幅（与首页轮播同尺寸） ==================== */
+    .hero-section {
+      padding: calc(var(--nav-height) + 24px) 24px 36px;
+      background: var(--color-cream-light);
+    }
+
+    .page-banner {
+      width: min(calc(960px + var(--carousel-frame-extra)), calc(78% + var(--carousel-frame-extra)));
+      height: calc(280px + var(--carousel-frame-extra));
+      margin: 0 auto;
+      border-radius: 10px;
+      border: 2px solid var(--color-gold);
+      box-shadow: 0 8px 28px rgba(74, 44, 23, 0.14);
+      background: linear-gradient(rgba(61, 35, 20, 0.5), rgba(61, 35, 20, 0.55)),
+                  url('img/puppet-performance.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--color-cream);
+    }
+
+    .page-banner h1 {
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      letter-spacing: 6px;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .page-banner p {
+      font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+      letter-spacing: 3px;
+      opacity: 0.95;
+    }
+
+    /* ==================== 主内容区 ==================== */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 6px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 12px;
+    }
+
+    .section-title h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--color-gold);
+    }
+
+    .section-title p {
+      margin-top: 12px;
+      color: var(--color-brown-light);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+    }
+
+    /* ==================== 2. Flex 布局 - 联系方式卡片 ==================== */
+    .contact-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 64px;
+    }
+
+    /* 单个联系信息卡片 */
+    .contact-card {
+      flex: 1 1 220px;
+      max-width: 280px;
+      background: var(--color-cream);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 8px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(74, 44, 23, 0.08);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(74, 44, 23, 0.14);
+    }
+
+    /* 图标圆形背景 */
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 16px;
+      background: var(--color-brown-dark);
+      color: var(--color-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .contact-card h3 {
+      font-size: 1.05rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--color-brown-light);
+      line-height: 1.7;
+    }
+
+    .contact-card a {
+      color: var(--color-brown-light);
+      transition: color var(--transition);
+    }
+
+    .contact-card a:hover {
+      color: var(--color-gold);
+    }
+
+    /* 表单与地图区域并排 */
+    .contact-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* ==================== 3. 联系表单 ==================== */
+    .contact-form-wrapper {
+      flex: 1 1 360px;
+      max-width: 560px;
+      background: var(--color-cream);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 8px;
+      padding: 36px 40px;
+      box-shadow: 0 4px 20px rgba(74, 44, 23, 0.1);
+    }
+
+    .contact-form-wrapper h3 {
+      font-size: 1.2rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 3px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--color-brown-dark);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .form-group label .required {
+      color: var(--color-error);
+      margin-left: 2px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--color-brown);
+      background: var(--color-cream-light);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 4px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+
+    .form-group textarea {
+      min-height: 140px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-gold);
+      box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.2);
+    }
+
+    .form-group input.error,
+    .form-group textarea.error {
+      border-color: var(--color-error);
+    }
+
+    .error-msg {
+      display: none;
+      font-size: 0.82rem;
+      color: var(--color-error);
+      margin-top: 6px;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      letter-spacing: 4px;
+      color: var(--color-cream);
+      background: var(--color-brown-dark);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .submit-btn:hover {
+      background: var(--color-brown-light);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* 右侧补充说明 */
+    .contact-side {
+      flex: 1 1 280px;
+      max-width: 400px;
+    }
+
+    .contact-side-box {
+      background: var(--color-cream);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 8px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(74, 44, 23, 0.08);
+    }
+
+    .contact-side-box h3 {
+      font-size: 1.1rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--color-gold);
+      padding-left: 12px;
+    }
+
+    .contact-side-box p {
+      font-size: 0.92rem;
+      color: var(--color-brown-light);
+      text-align: justify;
+      margin-bottom: 12px;
+    }
+
+    .contact-side-box ul li {
+      font-size: 0.9rem;
+      color: var(--color-brown-light);
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--color-cream-dark);
+    }
+
+    .contact-side-box ul li:last-child {
+      border-bottom: none;
+    }
+
+    /* 提交成功提示 */
+    .success-toast {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2000;
+      background: var(--color-cream);
+      border: 2px solid var(--color-gold);
+      border-radius: 8px;
+      padding: 40px 48px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(74, 44, 23, 0.25);
+      max-width: 90%;
+      width: 400px;
+    }
+
+    .success-toast.show {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+      to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .success-toast .icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px;
+      background: var(--color-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--color-brown-dark);
+    }
+
+    .success-toast h4 {
+      font-size: 1.2rem;
+      color: var(--color-brown-dark);
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .success-toast p {
+      font-size: 0.92rem;
+      color: var(--color-brown-light);
+      margin-bottom: 20px;
+    }
+
+    .success-toast button {
+      padding: 10px 32px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--color-cream);
+      background: var(--color-brown-dark);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .success-toast button:hover {
+      background: var(--color-brown-light);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(61, 35, 20, 0.5);
+      z-index: 1999;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    /* ==================== 4. 页脚（复用首页） ==================== */
+    .footer {
+      background: var(--color-brown-dark);
+      color: var(--color-cream);
+      padding: 48px 24px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(245, 230, 211, 0.2);
+    }
+
+    .footer-brand h3 {
+      font-size: 1.3rem;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      color: var(--color-gold);
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      max-width: 300px;
+    }
+
+    .footer-contact h4 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: var(--color-gold);
+      letter-spacing: 2px;
+    }
+
+    .footer-contact ul li {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .footer-contact ul li span {
+      color: var(--color-gold);
+      margin-right: 8px;
+    }
+
+    .footer-copyright {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 24px;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      letter-spacing: 1px;
+    }
+
+  </style>
+  <!-- 全局响应式适配（手机 / 平板 / 电脑） -->
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+  <div class="search-toast" id="searchToast"><h4>搜索结果</h4><p id="searchToastText"></p></div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">影</div>
+        <span>陕西皮影戏</span>
+      </a>
+      <div class="nav-right">
+        <form class="nav-search" id="navSearchForm" role="search">
+          <input type="search" id="searchInput" placeholder="搜索非遗..." aria-label="搜索">
+          <button type="submit">搜索</button>
+        </form>
+        <button class="menu-toggle" id="menuToggle" aria-label="打开菜单" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">首页</a></li>
+          <li class="nav-dropdown">
+            <a href="overview.html">非遗概述</a>
+            <ul class="dropdown-menu">
+              <li><a href="overview.html#folk">民间文学</a></li>
+              <li><a href="overview.html#music">传统音乐</a></li>
+              <li><a href="overview.html#drama">传统戏剧</a></li>
+              <li><a href="projects.html">皮影技艺</a></li>
+            </ul>
+          </li>
+          <li><a href="inheritros.html">非遗传承</a></li>
+          <li><a href="activity.html">非遗体验</a></li>
+          <li><a href="mall.html">非遗商城</a></li>
+          <li><a href="news.html">文化资讯</a></li>
+          <li><a href="contact.html" class="active">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面顶部横幅 -->
+  <section class="hero-section">
+    <header class="page-banner">
+      <div>
+        <h1>联系我们</h1>
+        <p>期待与您交流 · 共话非遗传承</p>
+      </div>
+    </header>
+  </section>
+
+  <main class="main-content">
+
+    <!-- ==================== 2. Flex 布局 - 联系方式展示 ==================== -->
+    <section>
+      <div class="section-title">
+        <h2>联系方式</h2>
+        <p>欢迎通过以下方式与我们取得联系</p>
+      </div>
+
+      <div class="contact-flex">
+        <!-- 地址 -->
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <h3>地址</h3>
+          <p>陕西省西安市雁塔区<br>文化路88号<br>陕西皮影非遗文化馆</p>
+        </div>
+
+        <!-- 电话 -->
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <h3>电话</h3>
+          <p>
+            <a href="tel:02988886666">029-8888-6666</a><br>
+            <a href="tel:02988886667">029-8888-6667</a><br>
+            （工作日 9:00-17:30）
+          </p>
+        </div>
+
+        <!-- 邮箱 -->
+        <div class="contact-card">
+          <div class="contact-icon">✉</div>
+          <h3>邮箱</h3>
+          <p>
+            <a href="mailto:shadow@shaanxi-piying.cn">shadow@shaanxi-piying.cn</a><br>
+            <a href="mailto:info@shaanxi-piying.cn">info@shaanxi-piying.cn</a>
+          </p>
+        </div>
+
+        <!-- 开放时间 -->
+        <div class="contact-card">
+          <div class="contact-icon">🕐</div>
+          <h3>开放时间</h3>
+          <p>
+            周二至周日<br>
+            9:00 - 17:30<br>
+            周一闭馆（法定节假日除外）
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. 联系表单 ==================== -->
+    <section>
+      <div class="section-title">
+        <h2>在线留言</h2>
+        <p>填写表单，我们将尽快回复您</p>
+      </div>
+
+      <div class="contact-layout">
+        <div class="contact-form-wrapper">
+          <h3>发送留言</h3>
+
+          <form id="contactForm" novalidate>
+            <!-- 姓名 -->
+            <div class="form-group">
+              <label for="contactName">姓名<span class="required">*</span></label>
+              <input type="text" id="contactName" name="contactName"
+                     placeholder="请输入您的姓名" autocomplete="name">
+              <p class="error-msg" id="nameError">姓名不能为空</p>
+            </div>
+
+            <!-- 邮箱 -->
+            <div class="form-group">
+              <label for="contactEmail">邮箱<span class="required">*</span></label>
+              <input type="email" id="contactEmail" name="contactEmail"
+                     placeholder="请输入您的邮箱地址" autocomplete="email">
+              <p class="error-msg" id="emailError">请输入正确的邮箱格式</p>
+            </div>
+
+            <!-- 留言 -->
+            <div class="form-group">
+              <label for="contactMessage">留言<span class="required">*</span></label>
+              <textarea id="contactMessage" name="contactMessage"
+                        placeholder="请输入您的留言内容（不少于10个字）"></textarea>
+              <p class="error-msg" id="messageError">留言不能为空且不少于10个字</p>
+            </div>
+
+            <button type="submit" class="submit-btn">发送留言</button>
+          </form>
+        </div>
+
+        <!-- 右侧说明 -->
+        <aside class="contact-side">
+          <div class="contact-side-box">
+            <h3>咨询须知</h3>
+            <p>
+              如需预约参观、研学合作或媒体采访，请通过留言表单或电话与我们联系。
+              工作人员将在 1-3 个工作日内回复。
+            </p>
+            <ul>
+              <li>参观预约：请提前至少 3 天预约</li>
+              <li>团体研学：10 人以上享团体优惠</li>
+              <li>合作洽谈：欢迎院校、文旅机构来信</li>
+            </ul>
+          </div>
+
+          <div class="contact-side-box">
+            <h3>交通指引</h3>
+            <p>
+              地铁：3 号线文化路站 C 口出站，步行约 500 米。<br>
+              公交：文化路站下车，12、23、46 路等均可到达。
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 提交成功提示 -->
+  <div class="overlay" id="overlay"></div>
+  <div class="success-toast" id="successToast">
+    <div class="icon">✓</div>
+    <h4>发送成功</h4>
+    <p>感谢您的留言，我们将尽快与您取得联系。</p>
+    <button type="button" id="closeToast">确 定</button>
+  </div>
+
+  <!-- ==================== 4. 页脚（复用首页） ==================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>陕西皮影戏</h3>
+        <p>传承千年光影艺术，弘扬中华优秀传统文化，让非遗文化焕发时代光彩。</p>
+      </div>
+
+      <div class="footer-contact">
+        <h4>联系我们</h4>
+        <ul>
+          <li><span>地址：</span>陕西省西安市雁塔区文化路88号</li>
+          <li><span>电话：</span>029-8888-6666</li>
+          <li><span>邮箱：</span>shadow@shaanxi-piying.cn</li>
+          <li><span>开放时间：</span>周二至周日 9:00 - 17:30</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      <p>&copy; 2026 陕西皮影戏非遗文化网站 · 保留所有权利</p>
+    </div>
+  </footer>
+
+  <!-- 全局导航栏交互 -->
+  <script src="js/nav.js"></script>
+  <script src="js/search.js"></script>
+
+  <!-- ==================== JavaScript：表单验证 ==================== -->
+  <script>
+    /* ---------- 联系表单基础验证 ---------- */
+    const contactForm    = document.getElementById('contactForm');
+    const contactName    = document.getElementById('contactName');
+    const contactEmail   = document.getElementById('contactEmail');
+    const contactMessage = document.getElementById('contactMessage');
+
+    const nameError    = document.getElementById('nameError');
+    const emailError   = document.getElementById('emailError');
+    const messageError = document.getElementById('messageError');
+
+    const successToast = document.getElementById('successToast');
+    const overlay      = document.getElementById('overlay');
+    const closeToast   = document.getElementById('closeToast');
+
+    // 显示错误
+    function showError(input, errorEl, message) {
+      input.classList.add('error');
+      errorEl.textContent = message;
+      errorEl.classList.add('show');
+    }
+
+    // 清除错误
+    function clearError(input, errorEl) {
+      input.classList.remove('error');
+      errorEl.classList.remove('show');
+    }
+
+    // 验证姓名：不能为空
+    function validateName() {
+      if (contactName.value.trim() === '') {
+        showError(contactName, nameError, '姓名不能为空');
+        return false;
+      }
+      clearError(contactName, nameError);
+      return true;
+    }
+
+    // 验证邮箱：基础格式校验
+    function validateEmail() {
+      const value = contactEmail.value.trim();
+      const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailReg.test(value)) {
+        showError(contactEmail, emailError, '请输入正确的邮箱格式');
+        return false;
+      }
+      clearError(contactEmail, emailError);
+      return true;
+    }
+
+    // 验证留言：不能为空且不少于10字
+    function validateMessage() {
+      const value = contactMessage.value.trim();
+      if (value === '' || value.length < 10) {
+        showError(contactMessage, messageError, '留言不能为空且不少于10个字');
+        return false;
+      }
+      clearError(contactMessage, messageError);
+      return true;
+    }
+
+    // 输入时实时清除错误
+    contactName.addEventListener('input', function () {
+      if (contactName.value.trim() !== '') clearError(contactName, nameError);
+    });
+
+    contactEmail.addEventListener('input', function () {
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.value.trim())) {
+        clearError(contactEmail, emailError);
+      }
+    });
+
+    contactMessage.addEventListener('input', function () {
+      if (contactMessage.value.trim().length >= 10) {
+        clearError(contactMessage, messageError);
+      }
+    });
+
+    // 表单提交
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const isNameValid    = validateName();
+      const isEmailValid   = validateEmail();
+      const isMessageValid = validateMessage();
+
+      if (isNameValid && isEmailValid && isMessageValid) {
+        successToast.classList.add('show');
+        overlay.classList.add('show');
+        contactForm.reset();
+      }
+    });
+
+    // 关闭成功提示
+    function hideToast() {
+      successToast.classList.remove('show');
+      overlay.classList.remove('show');
+    }
+
+    closeToast.addEventListener('click', hideToast);
+    overlay.addEventListener('click', hideToast);
+  </script>
+</body>
+</html>
